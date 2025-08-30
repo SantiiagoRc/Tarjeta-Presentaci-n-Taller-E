@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tarjeta Taller Espinosa</title>
-  <!-- Framework CSS para estilos utilitarios -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* ===== ESTILOS GENERALES ===== */
     .business-card {
-      width: 85.6mm;          /* Tamaño estándar de tarjeta de visita */
-      height: 54mm;           /* Tamaño estándar de tarjeta de visita */
+      width: 85.6mm;
+      height: 54mm;
       font-family: 'Arial', sans-serif;
-      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
-    /* Estilos para el código QR */
+    .business-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+    }
     .qr-code {
       width: 80px;
       height: 80px;
@@ -23,167 +23,124 @@
       padding: 2px;
       background-color: #ffffff;
     }
-    
-    /* Estilos para iconos sociales (solo versión digital) */
     .social-icon {
       transition: transform 0.3s ease;
-      border-radius: 50%;     /* Iconos circulares */
+      border-radius: 50%;
     }
     .social-icon:hover {
-      transform: scale(1.1);  /* Efecto al pasar el mouse */
+      transform: scale(1.2);
     }
-    
-    /* Estilos para el logo circular en el reverso */
+    .business-card-back {
+      background: linear-gradient(to left, #ea580c, #ffffff);
+    }
     .circular-logo {
       width: 100px;
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #ea580c; /* Borde naranja para coincidir con el tema */
+      border: 2px solid #ea580c;
       margin: 0 auto;
     }
-    
-    /* Estilos para el eslogan (asegura que quede en una línea) */
-    .slogan {
-      font-size: 14px;
+    .single-line {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 100%;
-      padding: 0 10px;
+      width: 100%;
       text-align: center;
+      padding: 0 10px;
     }
-    
-    /* Gradientes para las caras de la tarjeta */
-    .front-gradient {
-      background: linear-gradient(to right, #ea580c, #ffffff); /* Naranja a blanco (derecha) */
+    @media screen {
+      .business-card-back { display: none !important; }
+      .business-card-front { display: flex !important; }
     }
-    .back-gradient {
-      background: linear-gradient(to left, #ea580c, #ffffff);  /* Naranja a blanco (izquierda) */
-    }
-    
-    /* Contenedor para iconos sociales con altura fija */
-    .social-container {
-      height: 40px;           /* Altura fija para mantener espacio al imprimir */
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
-    
-    /* Contenedor principal para las tarjetas */
-    .cards-container {
-      display: flex;
-      gap: 20px;              /* Espacio entre tarjetas */
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    /* ===== ESTILOS PARA IMPRESIÓN ===== */
     @media print {
-      /* Oculta elementos que no deben imprimirse */
-      .no-print {
-        visibility: hidden !important;
-        position: absolute !important;
+      .business-card-front { display: none !important; }
+      .business-card-back { 
+        display: flex !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
-      
-      /* Mantiene el espacio de los iconos al imprimir */
-      .social-container {
-        height: 40px;
-      }
-      
-      /* Fondo blanco para la página al imprimir */
-      body {
-        background: white !important;
-      }
-      
-      /* Ajustes para las tarjetas al imprimir */
-      .business-card {
-        box-shadow: none !important;
-        -webkit-print-color-adjust: exact !important;  /* Fuerza colores en impresión */
-        print-color-adjust: exact !important;          /* Fuerza colores en impresión */
-      }
-      
-      /* Asegura que los gradientes se impriman correctamente */
-      .front-gradient, .back-gradient {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      
-      /* Espacio entre tarjetas para impresión */
-      .cards-container {
-        gap: 10mm;
-      }
+      .social-icons { display: none !important; }
+    }
+    body {
+      background: linear-gradient(to bottom, #f3f4f6, #e5e7eb);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .print-instruction {
+      margin-top: 20px;
+      text-align: center;
+      color: #4b5563;
+      font-size: 14px;
+      max-width: 300px;
     }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-  <!-- ===== CONTENEDOR PRINCIPAL DE TARJETAS ===== -->
-  <div class="cards-container">
-    
-    <!-- ===== CARA FRONTAL ===== -->
-    <div class="business-card front-gradient rounded-lg shadow-lg p-4 flex flex-col justify-between">
-      <!-- Encabezado con nombre y QR -->
-      <div class="flex justify-between items-start">
-        <div>
-          <h1 class="text-xl font-bold text-gray-900">Taller Espinosa</h1>
-          <p class="text-sm text-gray-800 font-medium">Mantenimiento Automotriz</p>
-          <p class="text-xs mt-1 text-gray-700">Servicios: Multi Marca</p>
-        </div>
-        <img src="https://i.ibb.co/V06dFzTG/Codigo-QR.png" alt="Código QR" class="qr-code">
+<body class="p-4">
+  <!-- FRENTE ORIGINAL -->
+  <div class="business-card business-card-front bg-gradient-to-r from-orange-600 to-white rounded-lg shadow-lg p-4 flex flex-col justify-between">
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Taller Espinosa</h1>
+        <p class="text-sm text-gray-800 font-medium">Mantenimiento Automotriz</p>
+        <p class="text-xs mt-1 text-gray-700">Servicios: Multi Marca</p>
       </div>
-      
-      <!-- Información de contacto -->
-      <div class="mt-2">
-        <p class="text-xs"><span class="text-gray-900 font-semibold">Dirección:</span> <span class="text-gray-700">Cra. 23 #63D 18, Bogotá</span></p>
-        <p class="text-xs"><span class="text-gray-900 font-semibold">Contacto:</span> <span class="text-gray-700">carlos129830@gmail.com</span></p>
-        <p class="text-xs"><span class="text-gray-900 font-semibold">Teléfono:</span> <span class="text-gray-700">+57 3103284830</span></p>
-      </div>
-      
-      <!-- Iconos de redes sociales (solo versión digital) -->
-      <div class="social-container">
-        <div class="social-icons flex justify-center space-x-4 no-print">
-          <!-- Facebook -->
-          <a href="https://www.facebook.com/share/17VDCeFy5Z/?mibextid=qi2Omg" target="_blank" class="social-icon">
-            <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
-            </svg>
-          </a>
-          
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/taller_espinosa_/" target="_blank" class="social-icon">
-            <svg class="w-6 h-6 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-            </svg>
-          </a>
-          
-          <!-- WhatsApp -->
-          <a href="https://wa.me/573103284830" target="_blank" class="social-icon">
-            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-          </a>
-        </div>
-      </div>
+      <img src="https://i.ibb.co/V06dFzTG/Codigo-QR.png" alt="Código QR" class="qr-code">
     </div>
-
-    <!-- ===== CARA TRASERA ===== -->
-    <div class="business-card back-gradient rounded-lg shadow-lg p-4 flex flex-col items-center justify-center">
-      <!-- Logo circular -->
-      <img src="https://i.ibb.co/WvrwcH8R/Logo-Final.jpg" alt="Logo Taller Espinosa" class="circular-logo">
-      
-      <!-- Línea divisoria decorativa -->
-      <div class="border-t-2 border-orange-600 w-24 mx-auto my-3"></div>
-      
-      <!-- Eslogan -->
-      <p class="slogan italic text-gray-800 font-medium">
-        "Expertos en automóviles multi-marca"
-      </p>
+    <div class="mt-2">
+      <p class="text-xs"><span class="text-gray-900 font-semibold">Dirección:</span> <span class="text-gray-700">Cra. 23 #63D 18, Bogotá</span></p>
+      <p class="text-xs"><span class="text-gray-900 font-semibold">Contacto:</span> <span class="text-gray-700">carlos129830@gmail.com</span></p>
+      <p class="text-xs"><span class="text-gray-900 font-semibold">Teléfono:</span> <span class="text-gray-700">+57 3103284830</span></p>
+    </div>
+    <div class="social-icons flex justify-center space-x-4 mt-3">
+      <a href="https://www.facebook.com/share/17VDCeFy5Z/?mibextid=qi2Omg" target="_blank" class="social-icon">
+        <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/taller_espinosa_/" target="_blank" class="social-icon">
+        <svg class="w-6 h-6 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </a>
+      <a href="https://wa.me/573103284830" target="_blank" class="social-icon">
+        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.510-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
     </div>
   </div>
 
-  <!-- ===== BOTÓN DE IMPRESIÓN ===== -->
-  <button onclick="window.print()" class="fixed bottom-4 right-4 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded shadow-lg no-print">
-    Imprimir Tarjetas
-  </button>
+  <!-- REVERSO ORIGINAL -->
+  <div class="business-card business-card-back rounded-lg p-4 hidden print:flex flex-col items-center justify-center mt-4">
+    <img src="https://i.ibb.co/WvrwcH8R/Logo-Final.jpg" alt="Logo Taller Espinosa" class="circular-logo">
+    <div class="border-t-2 border-orange-600 w-24 mx-auto my-3"></div>
+    <p class="text-lg italic text-gray-800 font-medium single-line">
+      "Expertos en automóviles multi-marca"
+    </p>
+  </div>
+
+  <div class="print-instruction">
+    <p>Para imprimir la tarjeta, usa la función de impresión de tu navegador (Ctrl+P).</p>
+    <p class="text-xs mt-2">Al imprimir, se mostrará el reverso de la tarjeta.</p>
+  </div>
+
+  <script>
+    // Función para manejar la impresión
+    function handlePrint() {
+      window.print();
+    }
+
+    // También se puede imprimir con Ctrl+P
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        handlePrint();
+      }
+    });
+  </script>
 </body>
 </html>
